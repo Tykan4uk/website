@@ -1,29 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebSite.Configurations;
+using WebSite.Services;
+using WebSite.Services.Abstractions;
 
 namespace WebSite
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup()
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+            .AddJsonFile("config.json")
+            .AddEnvironmentVariables();
+
+            AppConfiguration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration AppConfiguration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddControllersWithViews();
+            services.AddTransient<IHttpClientService, HttpClientService>();
+            services.AddSingleton<ICatalogService, CatalogService>();
+            services.Configure<Config>(AppConfiguration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
