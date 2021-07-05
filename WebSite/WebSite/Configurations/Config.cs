@@ -2,6 +2,6 @@
 {
     public class Config
     {
-        public RouteConfig WebSite { get; set; } = null!;
+        public RouteConfig WebSiteRoute { get; set; } = null!;
     }
 }
