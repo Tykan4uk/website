@@ -6,6 +6,6 @@ namespace WebSite.Services.Abstractions
 {
     public interface ICatalogService
     {
-        Task<List<GameEntity>> GetByPage(int page);
+        Task<List<GameViewModel>> GetByPage(int page);
     }
 }

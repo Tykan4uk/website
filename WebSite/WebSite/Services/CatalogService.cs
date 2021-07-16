@@ -13,16 +13,16 @@ namespace WebSite.Services
         private readonly IHttpClientService _httpClientService;
         private readonly RouteConfig _routeConfig;
 
-        public CatalogService(IHttpClientService httpClientService, IOptions<RouteConfig> options)
+        public CatalogService(IHttpClientService httpClientService, IOptions<Config> options)
         {
-            _routeConfig = options.Value;
+            _routeConfig = options.Value.WebSiteRoute;
             _httpClientService = httpClientService;
         }
 
-        public async Task<List<GameEntity>> GetByPage(int page)
+        public async Task<List<GameViewModel>> GetByPage(int page)
         {
-            string url = $"{_routeConfig.GetByPageUrl}?page={page}";
-            var response = await _httpClientService.SendAsync<List<GameEntity>>(url, HttpMethod.Get);
+            string url = $"{_routeConfig.Game}GetByPage?page={page}";
+            var response = await _httpClientService.SendAsync<List<GameViewModel>>(url, HttpMethod.Post);
             return response;
         }
     }
