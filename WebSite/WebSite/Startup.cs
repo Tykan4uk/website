@@ -22,17 +22,17 @@ namespace WebSite
 
         public IConfiguration AppConfiguration { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
             services.AddControllersWithViews();
             services.AddTransient<IHttpClientService, HttpClientService>();
-            services.AddSingleton<ICatalogService, CatalogService>();
+            services.AddTransient<ICatalogService, CatalogService>();
+            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IRateLimitService, RateLimitService>();
             services.Configure<Config>(AppConfiguration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -43,7 +43,6 @@ namespace WebSite
             {
                 app.UseExceptionHandler("/Home/Error");
 
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
