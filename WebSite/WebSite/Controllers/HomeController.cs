@@ -9,12 +9,10 @@ namespace WebSite.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICatalogService _catalogService;
 
         public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
         {
             _logger = logger;
-            _catalogService = catalogService;
         }
 
         public IActionResult Index()
@@ -31,12 +29,6 @@ namespace WebSite.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult TryGetOutput()
-        {
-            var response = _catalogService.GetByPage(0).GetAwaiter().GetResult();
-            return View(response);
         }
     }
 }
