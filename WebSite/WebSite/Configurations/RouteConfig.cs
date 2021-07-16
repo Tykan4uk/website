@@ -2,19 +2,9 @@
 {
     public class RouteConfig
     {
-        private string _getByPageUrl;
-
-        public string BaseUrl { get; set; }
-        public string GetByPageUrl
-        {
-            get
-            {
-                return _getByPageUrl;
-            }
-            set
-            {
-                _getByPageUrl = $"{BaseUrl}{value}";
-            }
-        }
+        public string Game { get; set; }
+        public string RateLimit { get; set; }
+        public string Cart { get; set; }
+        public string RelatedProduct { get; set; }
     }
 }
