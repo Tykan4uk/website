@@ -1,0 +1,62 @@
+﻿@model GetByPageRelatedProductResponse
+ 
+@{
+    ViewData["Title"] = "Catalog";
+    int pages = (int)Math.Ceiling(Model.TotalRecords / (double)ViewBag.PageSize);
+    int page = ViewBag.Page;
+}
+<h1>Catalog</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RelatedProducts.ToList()[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RelatedProducts.ToList()[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RelatedProducts.ToList()[0].Price)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RelatedProducts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @if (page != 1)
+    {
+        <li class="page-item">
+            <a class="page-link" href="/RelatedProduct/Catalog?page=@(page - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    }
+    @for (int i = 1; i < pages + 1; i++)
+    {
+        <li class="page-item"><a class="page-link" href="/RelatedProduct/Catalog?page=@i">@i</a></li>
+    }
+    @if (page != pages)
+    {
+        <li>
+            <a class="page-link" href="/RelatedProduct/Catalog?page=@(page + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    }
+    </ul>
