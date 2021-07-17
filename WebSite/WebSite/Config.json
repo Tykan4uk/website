@@ -4,5 +4,8 @@
     "RateLimit": "http://localhost:5004/api/v1/ManageBff/",
     "Cart": "http://localhost:5006/api/v1/CartBff/",
     "RelatedProduct": "http://localhost:5008/api/v1/RelatedProductBff/"
+  },
+  "WebSiteConfig": {
+    "PageSize": 10
   }
 }
