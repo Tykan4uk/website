@@ -4,8 +4,8 @@ using WebSite.Models;
 
 namespace WebSite.Services.Abstractions
 {
-    public interface ICatalogService
+    public interface IGameService
     {
-        Task<List<GameViewModel>> GetByPage(int page);
+        Task<List<GameModel>> GetByPage(int page);
     }
 }

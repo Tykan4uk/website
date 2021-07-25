@@ -28,7 +28,7 @@ namespace WebSite
             services.AddHttpClient();
             services.AddControllersWithViews();
             services.AddTransient<IHttpClientService, HttpClientService>();
-            services.AddTransient<ICatalogService, CatalogService>();
+            services.AddTransient<IGameService, GameService>();
             services.AddTransient<IRelatedProductService, RelatedProductService>();
             services.AddTransient<ICartService, CartService>();
             services.Configure<Config>(AppConfiguration);
