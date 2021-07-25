@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 using Newtonsoft.Json;
 using WebSite.Services.Abstractions;
 
@@ -19,7 +20,22 @@ namespace WebSite.Services
         public async Task<TResponse> SendAsync<TResponse>(string url, HttpMethod method, object content = null)
             where TResponse : class
         {
+            // discover endpoints from metadata
+            var genTokenClient = new HttpClient();
+            var disco = await genTokenClient.GetDiscoveryDocumentAsync("http://localhost:5000");
+
+            // request token
+            var tokenResponse = await genTokenClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+
+                ClientId = "website_client",
+                ClientSecret = "websitesecret"
+            });
+
+            // call api
             var client = _clientFactory.CreateClient();
+            client.SetBearerToken(tokenResponse.AccessToken);
 
             var httpMessage = new HttpRequestMessage();
             httpMessage.RequestUri = new Uri(url);
