@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +33,27 @@ namespace WebSite
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IRateLimitService, RateLimitService>();
             services.Configure<Config>(AppConfiguration);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "cookie";
+                options.DefaultSignInScheme = "cookie";
+                options.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("cookie")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false; // dev only
+
+                options.ClientId = "pkce_client";
+                options.ClientSecret = "acf2ec6fb01a4b698ba240c2b10a0243";
+                options.ResponseType = "code";
+                options.ResponseMode = "form_post";
+                options.CallbackPath = "/signin-oidc";
+
+                // Enable PKCE (authorization code flow only)
+                options.UsePkce = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,15 +65,14 @@ namespace WebSite
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Strict });
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
