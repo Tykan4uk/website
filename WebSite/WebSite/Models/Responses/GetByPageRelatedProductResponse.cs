@@ -4,7 +4,7 @@ namespace WebSite.Models.Responses
 {
     public class GetByPageRelatedProductResponse
     {
-        public IEnumerable<RelatedProductViewModel> RelatedProducts { get; set; }
+        public IEnumerable<RelatedProductModel> RelatedProducts { get; set; }
         public int TotalRecords { get; set; }
     }
 }
