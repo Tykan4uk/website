@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using WebSite.Models;
+using WebSite.Models.Responses;
+using WebSite.Models.Requests;
 
 namespace WebSite.Services.Abstractions
 {
     public interface IGameService
     {
-        Task<List<GameModel>> GetByPage(int page);
+        Task<GetByPageGameResponse> GetByPage(GetByPageProductRequest getByPageRequest);
     }
 }

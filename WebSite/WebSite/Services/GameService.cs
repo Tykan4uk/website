@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using System.Net.Http;
-using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using WebSite.Services.Abstractions;
-using WebSite.Models;
 using WebSite.Configurations;
+using WebSite.Models.Requests;
+using WebSite.Models.Responses;
 
 namespace WebSite.Services
 {
-    public class GameService : ICatalogService
+    public class GameService : IGameService
     {
         private readonly IHttpClientService _httpClientService;
         private readonly RouteConfig _routeConfig;
@@ -19,10 +19,10 @@ namespace WebSite.Services
             _httpClientService = httpClientService;
         }
 
-        public async Task<List<GameModel>> GetByPage(int page)
+        public async Task<GetByPageGameResponse> GetByPage(GetByPageProductRequest getByPageRequest)
         {
-            string url = $"{_routeConfig.Game}GetByPage?page={page}";
-            var response = await _httpClientService.SendAsync<List<GameModel>>(url, HttpMethod.Post);
+            var url = $"{_routeConfig.Game}GetByPage";
+            var response = await _httpClientService.SendAsync<GetByPageGameResponse>(url, HttpMethod.Post, getByPageRequest);
             return response;
         }
     }
