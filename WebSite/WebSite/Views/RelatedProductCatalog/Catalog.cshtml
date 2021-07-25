@@ -1,0 +1,76 @@
+﻿@model RelatedPorductCatalogViewModel
+
+@{
+    ViewData["Title"] = "Related products";
+    int pages = (int)Math.Ceiling(Model.TotalRecords / (double)Model.PageSize);
+    int page = Model.CurrentPage;
+}
+<h1>Related products</h1>
+
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort by...
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="/RelatedProductCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.CreateDateAscending">Creation date ⇧</a>
+        <a class="dropdown-item" href="/RelatedProductCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.CreateDateDescending">Creation date ⇩</a>
+        <a class="dropdown-item" href="/RelatedProductCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.PriceAscending">Price ⇧</a>
+        <a class="dropdown-item" href="/RelatedProductCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.PriceDescending">Price ⇩</a>
+    </div>
+
+    @for (var i = 0; i < Model.RelatedProducts.Count();)
+    {
+        <div class="card-deck">
+            @for (var j = 0; j < 3; j++, i++)
+            {
+                @if (i >= Model.RelatedProducts.Count())
+                {
+                    <div class="card text-center" style="border: none">
+                    </div>
+                }
+                else
+                {
+                    <div class="card text-center">
+                        <img src="http://192.168.1.120/assets/images/@Model.RelatedProducts.ToList()[i].ImageUrl" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.RelatedProducts.ToList()[i].Name</h5>
+                            <p class="card-text">@Model.RelatedProducts.ToList()[i].Description</p>
+                            <a href="#" class="btn btn-primary" style="font-size: 20px;">Go somewhere</a>
+                            <p></p>
+                            <div class="badge badge-primary text-wrap" style="font-size: 20px;">
+                                @Model.RelatedProducts.ToList()[i].Price UAH
+                                @if (Context.Request.Cookies["idsrv.session"] != null)
+                                {
+                                    <a href="/RelatedProductCatalog/Catalog?page=1&sortedType=0"><img src="http://192.168.1.120/assets/images/Cart.png" style="height: 20px; width: 20px;" /></a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <p></p>
+    }
+
+
+    <ul class="pagination">
+        @if (page != 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/RelatedProductCatalog/Catalog?page=@(page - 1)&sortedType=@Model.SortedType" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+        @for (int i = 1; i < pages + 1; i++)
+        {
+            <li class="page-item"><a class="page-link" href="/RelatedProductCatalog/Catalog?page=@i&sortedType=@Model.SortedType">@i</a></li>
+        }
+        @if (page != pages)
+        {
+            <li>
+                <a class="page-link" href="/RelatedProductCatalog/Catalog?page=@(page + 1)&sortedType=@Model.SortedType" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+    </ul>
