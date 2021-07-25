@@ -6,6 +6,6 @@
     "Cart": "http://192.168.1.120:5005/api/v1/CartBff/"
   },
   "WebSiteConfig": {
-    "PageSize": 10
+    "PageSize": 9
   }
 }
