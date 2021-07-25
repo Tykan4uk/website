@@ -19,7 +19,7 @@ namespace WebSite.Services
             _httpClientService = httpClientService;
         }
 
-        public async Task<GetByPageRelatedProductResponse> GetByPage(GetByPageRequest getByPageRequest)
+        public async Task<GetByPageRelatedProductResponse> GetByPage(GetByPageProductRequest getByPageRequest)
         {
             var url = $"{_routeConfig.RelatedProduct}GetByPage";
             var response = await _httpClientService.SendAsync<GetByPageRelatedProductResponse>(url, HttpMethod.Post, getByPageRequest);
