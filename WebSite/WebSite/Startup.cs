@@ -31,7 +31,6 @@ namespace WebSite
             services.AddTransient<ICatalogService, CatalogService>();
             services.AddTransient<IRelatedProductService, RelatedProductService>();
             services.AddTransient<ICartService, CartService>();
-            services.AddTransient<IRateLimitService, RateLimitService>();
             services.Configure<Config>(AppConfiguration);
             services.AddAuthentication(options =>
             {
