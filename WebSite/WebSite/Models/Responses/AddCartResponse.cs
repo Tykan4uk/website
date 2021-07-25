@@ -2,6 +2,6 @@
 {
     public class AddCartResponse
     {
-        public int UserId { get; set; }
+        public bool IsAdded { get; set; }
     }
 }

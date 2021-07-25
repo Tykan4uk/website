@@ -4,6 +4,6 @@ namespace WebSite.Models.Responses
 {
     public class GetCartResponse
     {
-        public HashSet<int> GameIdList { get; set; } = null!;
+        public List<CartProductModel> CartProducts { get; set; } = null!;
     }
 }
