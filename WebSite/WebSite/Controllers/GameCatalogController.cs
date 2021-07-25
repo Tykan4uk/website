@@ -5,12 +5,12 @@ using WebSite.Services.Abstractions;
 
 namespace WebSite.Controllers
 {
-    public class CatalogController : Controller
+    public class GameCatalogController : Controller
     {
-        private readonly ILogger<CatalogController> _logger;
+        private readonly ILogger<GameCatalogController> _logger;
         private readonly ICatalogService _catalogService;
 
-        public CatalogController(ILogger<CatalogController> logger, ICatalogService catalogService)
+        public GameCatalogController(ILogger<GameCatalogController> logger, ICatalogService catalogService)
         {
             _logger = logger;
             _catalogService = catalogService;
