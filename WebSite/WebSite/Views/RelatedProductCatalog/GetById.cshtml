@@ -1,0 +1,19 @@
+﻿@model RelatedProductViewModel
+
+@{
+    ViewData["Title"] = $"{Model.RelatedProduct.Name}";
+}
+<div class="card-deck">
+    <div class="card text-center" style="border: none">
+    </div>
+    <div class="card text-center">
+        <img src="http://192.168.1.120/assets/images/@Model.RelatedProduct.ImageUrl" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Model.RelatedProduct.Name</h5>
+            <p class="card-text">@Model.RelatedProduct.Description</p>
+            <a href="/RelatedProductCatalog/Catalog?page=@Model.Page&sortedType=@Model.SortedType" class="btn btn-primary" style="font-size: 20px;">Back</a>
+        </div>
+    </div>
+    <div class="card text-center" style="border: none">
+    </div>
+</div>
