@@ -25,5 +25,12 @@ namespace WebSite.Services
             var response = await _httpClientService.SendAsync<GetByPageRelatedProductResponse>(url, HttpMethod.Post, getByPageRequest);
             return response;
         }
+
+        public async Task<GetByIdRelatedProductResponse> GetById(GetByIdProductRequest getByIdRequest)
+        {
+            var url = $"{_routeConfig.RelatedProduct}GetById";
+            var response = await _httpClientService.SendAsync<GetByIdRelatedProductResponse>(url, HttpMethod.Post, getByIdRequest);
+            return response;
+        }
     }
 }

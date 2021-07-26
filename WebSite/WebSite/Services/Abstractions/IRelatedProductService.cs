@@ -7,5 +7,6 @@ namespace WebSite.Services.Abstractions
     public interface IRelatedProductService
     {
         Task<GetByPageRelatedProductResponse> GetByPage(GetByPageProductRequest getByPageRequest);
+        Task<GetByIdRelatedProductResponse> GetById(GetByIdProductRequest getByIdRequest);
     }
 }
