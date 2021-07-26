@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using WebSite.Configurations;
-using WebSite.Models;
+using WebSite.Models.Requests;
 using WebSite.Models.Responses;
 using WebSite.Services.Abstractions;
 
@@ -20,24 +19,24 @@ namespace WebSite.Services
             _httpClientService = httpClientService;
         }
 
-        public async Task<AddCartResponse> AddToCart(int userId, int gameId)
+        public async Task<AddCartResponse> AddToCart(AddCartRequest addCartRequest)
         {
-            string url = $"{_routeConfig.Cart}Add?userId={userId}&gameId={gameId}";
-            var response = await _httpClientService.SendAsync<AddCartResponse>(url, HttpMethod.Post);
+            string url = $"{_routeConfig.Cart}Add";
+            var response = await _httpClientService.SendAsync<AddCartResponse>(url, HttpMethod.Post, addCartRequest);
             return response;
         }
 
-        public async Task<List<GameViewModel>> GetCart(int userId)
+        public async Task<GetCartResponse> GetCart(GetCartRequest getCartRequest)
         {
-            string urlCartApi = $"{_routeConfig.Cart}?userId={userId}";
-            var listId = await _httpClientService.SendAsync<GetCartResponse>(urlCartApi, HttpMethod.Post);
-            return new List<GameViewModel>();
+            string urlCartApi = $"{_routeConfig.Cart}Get";
+            var response = await _httpClientService.SendAsync<GetCartResponse>(urlCartApi, HttpMethod.Post, getCartRequest);
+            return response;
         }
 
-        public async Task<RemoveCartResponse> RemoveFromCart(int userId, int gameId)
+        public async Task<RemoveCartResponse> RemoveFromCart(RemoveCartRequest removeCartRequest)
         {
-            string url = $"{_routeConfig.Cart}Remove?userId={userId}&gameId={gameId}";
-            var response = await _httpClientService.SendAsync<RemoveCartResponse>(url, HttpMethod.Post);
+            string url = $"{_routeConfig.Cart}Remove";
+            var response = await _httpClientService.SendAsync<RemoveCartResponse>(url, HttpMethod.Post, removeCartRequest);
             return response;
         }
     }

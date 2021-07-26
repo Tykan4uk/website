@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using WebSite.Models;
+﻿using System.Threading.Tasks;
+using WebSite.Models.Requests;
 using WebSite.Models.Responses;
 
 namespace WebSite.Services.Abstractions
 {
     public interface ICartService
     {
-        Task<AddCartResponse> AddToCart(int userId, int gameId);
+        Task<AddCartResponse> AddToCart(AddCartRequest addCartRequest);
 
-        Task<List<GameViewModel>> GetCart(int userId);
+        Task<GetCartResponse> GetCart(GetCartRequest getCartRequest);
 
-        Task<RemoveCartResponse> RemoveFromCart(int userId, int gameId);
+        Task<RemoveCartResponse> RemoveFromCart(RemoveCartRequest removeCartRequest);
     }
 }
