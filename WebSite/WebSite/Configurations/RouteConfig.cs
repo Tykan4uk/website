@@ -6,5 +6,6 @@
         public string RelatedProduct { get; set; }
         public string RateLimit { get; set; }
         public string Cart { get; set; }
+        public string Order { get; set; }
     }
 }

@@ -3,7 +3,8 @@
     "Game": "http://192.168.1.120:5002/api/v1/GameBff/",
     "RelatedProduct": "http://192.168.1.120:5003/api/v1/RelatedProductBff/",
     "RateLimit": "http://192.168.1.120:5004/api/v1/RateLimitBff/",
-    "Cart": "http://192.168.1.120:5005/api/v1/CartBff/"
+    "Cart": "http://192.168.1.120:5005/api/v1/CartBff/",
+    "Order": "http://192.168.1.120:5006/api/v1/OrderBff/"
   },
   "WebSiteConfig": {
     "PageSize": 9
