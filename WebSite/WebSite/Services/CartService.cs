@@ -39,5 +39,12 @@ namespace WebSite.Services
             var response = await _httpClientService.SendAsync<RemoveCartResponse>(url, HttpMethod.Post, removeCartRequest);
             return response;
         }
+
+        public async Task<ClearCartResponse> ClearCart(ClearCartRequest clearCartRequest)
+        {
+            string url = $"{_routeConfig.Cart}Clear";
+            var response = await _httpClientService.SendAsync<ClearCartResponse>(url, HttpMethod.Post, clearCartRequest);
+            return response;
+        }
     }
 }
