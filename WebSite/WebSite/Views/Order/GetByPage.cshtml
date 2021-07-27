@@ -1,0 +1,45 @@
+﻿@model GetByPageOrderResponse
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h1>Orders</h1>
+@if (Model.Orders.ToList().Count == 0)
+{
+    <a>Orderlist is empty!</a>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Orders.ToList()[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Orders.ToList()[0].CreateDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Orders.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        <a>@(i+1)</a>
+                    </td>
+                    <td>
+                        <a>@Model.Orders.ToList()[i].CreateDate</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="/Order/GetById?orderId=@Model.Orders.ToList()[i].Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
