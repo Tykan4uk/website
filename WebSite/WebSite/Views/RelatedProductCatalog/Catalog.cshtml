@@ -34,13 +34,15 @@
                         <div class="card-body">
                             <h5 class="card-title">@Model.RelatedProducts.ToList()[i].Name</h5>
                             <p class="card-text">@Model.RelatedProducts.ToList()[i].Description</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 20px;">Go somewhere</a>
+                            <a href="/RelatedProductCatalog/GetById?id=@Model.RelatedProducts.ToList()[i].Id&page=@Model.CurrentPage&sortedType=@Model.SortedType" class="btn btn-primary" style="font-size: 20px;">Details</a>
                             <p></p>
                             <div class="badge badge-primary text-wrap" style="font-size: 20px;">
                                 @Model.RelatedProducts.ToList()[i].Price UAH
-                                @if (Context.Request.Cookies["idsrv.session"] != null)
+                                @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a href="/RelatedProductCatalog/Catalog?page=1&sortedType=0"><img src="http://192.168.1.120/assets/images/Cart.png" style="height: 20px; width: 20px;" /></a>
+                                <form method="post">
+                                    <a class="btn btn-info btn-sm" onclick="addToCartJs('@Model.RelatedProducts.ToList()[i].Id', '@Model.RelatedProducts.ToList()[i].Name', '@Model.RelatedProducts.ToList()[i].Description', @Model.RelatedProducts.ToList()[i].Price, '@ProductTypeEnum.RelatedProduct');"><img src="http://192.168.1.120/assets/images/Cart.png" style="height: 20px; width: 20px;"/></a>
+                                </form>
                                 }
                             </div>
                         </div>
