@@ -1,63 +1,78 @@
-﻿@model IEnumerable<WebSite.Models.GameViewModel>
+﻿@model GameCatalogViewModel
 
 @{
-    ViewData["Title"] = "Catalog";
+    ViewData["Title"] = "Games";
+    int pages = (int)Math.Ceiling(Model.TotalRecords / (double)Model.PageSize);
+    int page = Model.CurrentPage;
+}
+<h1>Games</h1>
+
+<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort by...
+</button>
+<div class="dropdown-menu">
+    <a class="dropdown-item" href="/GameCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.CreateDateAscending">Creation date ⇧</a>
+    <a class="dropdown-item" href="/GameCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.CreateDateDescending">Creation date ⇩</a>
+    <a class="dropdown-item" href="/GameCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.PriceAscending">Price ⇧</a>
+    <a class="dropdown-item" href="/GameCatalog/Catalog?page=1&sortedType=@SortedTypeEnum.PriceDescending">Price ⇩</a>
+</div>
+
+@for (var i = 0; i < Model.Games.Count();)
+{
+    <div class="card-deck">
+        @for (var j = 0; j < 3; j++, i++)
+        {
+            @if (i >= Model.Games.Count())
+            {
+                <div class="card text-center" style="border: none">
+                </div>
+            }
+            else
+            {
+                <div class="card text-center">
+                    <img src="http://192.168.1.120/assets/images/@Model.Games.ToList()[i].ImageUrl" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Games.ToList()[i].Name</h5>
+                        <p class="card-text">@Model.Games.ToList()[i].Description</p>
+                        <a href="/GameCatalog/GetById?id=@Model.Games.ToList()[i].Id&page=@Model.CurrentPage&sortedType=@Model.SortedType" class="btn btn-primary" style="font-size: 20px;">Details</a>
+                        <p></p>
+                        <div class="badge badge-primary text-wrap" style="font-size: 20px;">
+                            @Model.Games.ToList()[i].Price UAH
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form method="post">
+                                    <a class="btn btn-info btn-sm" onclick="addToCartJs('@Model.Games.ToList()[i].Id', '@Model.Games.ToList()[i].Name', '@Model.Games.ToList()[i].Description', @Model.Games.ToList()[i].Price, '@ProductTypeEnum.Game');"><img src="http://192.168.1.120/assets/images/Cart.png" style="height: 20px; width: 20px;" /></a>
+                                </form>
+                                }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <p></p>
 }
 
-<h1>Catalog</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Developer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Publisher)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Developer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate.Year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price) UAH
-                </td>
-                <td>
-                    <form method="post">
-                        <a class="btn btn-info btn-sm" onclick="addToCartJs(@item.Id);">+</a>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<ul class="pagination">
+    @if (page != 1)
+    {
+        <li class="page-item">
+            <a class="page-link" href="/GameCatalog/Catalog?page=@(page - 1)&sortedType=@Model.SortedType" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    }
+    @for (int i = 1; i < pages + 1; i++)
+    {
+        <li class="page-item"><a class="page-link" href="/GameCatalog/Catalog?page=@i&sortedType=@Model.SortedType">@i</a></li>
+    }
+    @if (page != pages)
+    {
+        <li>
+            <a class="page-link" href="/GameCatalog/Catalog?page=@(page + 1)&sortedType=@Model.SortedType" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    }
+</ul>
