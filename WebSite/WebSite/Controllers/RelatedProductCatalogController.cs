@@ -45,5 +45,23 @@ namespace WebSite.Controllers
 
             return View("you died!");
         }
+
+        public async Task<IActionResult> GetById(string id, int page, SortedTypeEnum sortedType)
+        {
+            var request = new GetByIdProductRequest() { Id = id };
+            var response = await _relatedProductService.GetById(request);
+            if (response != null)
+            {
+                var view = new RelatedProductViewModel()
+                {
+                    RelatedProduct = response.RelatedProduct,
+                    Page = page,
+                    SortedType = sortedType
+                };
+                return View(view);
+            }
+
+            return View("you died!");
+        }
     }
 }
