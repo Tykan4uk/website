@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebSite.Models;
@@ -10,7 +11,7 @@ namespace WebSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
+        public HomeController(ILogger<HomeController> logger, IGameService catalogService)
         {
             _logger = logger;
         }
@@ -24,6 +25,11 @@ namespace WebSite.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public IActionResult Login() => View("Index");
+
+        public IActionResult Logout() => SignOut("cookie", "oidc");
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
