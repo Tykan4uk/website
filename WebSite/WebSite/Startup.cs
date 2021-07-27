@@ -31,6 +31,7 @@ namespace WebSite
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IRelatedProductService, RelatedProductService>();
             services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IOrderService, OrderService>();
             services.Configure<Config>(AppConfiguration);
             services.AddAuthentication(options =>
             {
