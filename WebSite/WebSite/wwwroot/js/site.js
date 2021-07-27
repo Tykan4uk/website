@@ -2,12 +2,15 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-function addToCartJs(id) {
-
-    $.post("/Cart/AddToCart", { gameId: id })
+function addToCartJs(id, name, desc, price, type) {
+    $.post("/Cart/AddToCart", { productId: id, name: name, description: desc, price: price, type: type })
 }
 
 function deleteFromCartJs(id) {
+    $.post("/Cart/RemoveFromCart", { productId: id })
+}
 
-    $.post("/Cart/RemoveFromCart", { gameId: id })
+function createOrderAndClearCartJs() {
+    $.get("/Order/Add");
+    $.get("/Cart/ClearCart")
 }
