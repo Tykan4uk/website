@@ -24,11 +24,14 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="GameCatalog" asp-action="Catalog" asp-route-page="1" asp-route-sortedType="0">Games</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="RelatedProductCatalog" asp-action="Catalog" asp-route-page="1" asp-route-sortedType="@SortedTypeEnum.CreateDateAscending">Related Products</a>
                             </div>
+                        </li>
                     </ul>
-                    @if (Context.Request.Cookies["idsrv.session"] != null)
+
+                    @if (User.Identity.IsAuthenticated)
                     {
-                        <a href="/RelatedProductCatalog/Catalog?page=1&sortedType=0"><img src="http://192.168.1.120/assets/images/Cart.png" style="height: 30px; width: 30px;" /></a>
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        <a asp-area="" asp-controller="Cart" asp-action="GetCart"><img src="http://192.168.1.120/assets/images/Cart.png" style="height: 30px; width: 30px;" /></a>
+                        <a class="nav-item text-dark" asp-area="" asp-controller="Order" asp-action="GetByPage" asp-route-page="1"><img src="http://192.168.1.120/assets/images/Account.png" style="height: 30px; width: 30px;" /></a>
                     }
                     else
                     {
