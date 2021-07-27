@@ -42,7 +42,7 @@ namespace WebSite
             .AddCookie("cookie")
             .AddOpenIdConnect("oidc", options =>
             {
-                options.Authority = "http://localhost:5000";
+                options.Authority = "http://192.168.1.120:5000";
                 options.RequireHttpsMetadata = false; // dev only
 
                 options.ClientId = "pkce_client";
